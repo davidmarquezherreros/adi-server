@@ -1,7 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var sqlite3 = require('sqlite3').verbose();
-var db = new sqlite3.Database('adi');
 
 // usuario:123456
 var auth = "dXN1YXJpbzoxMjM0NTY="

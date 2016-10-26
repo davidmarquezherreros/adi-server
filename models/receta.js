@@ -11,7 +11,7 @@ module.exports = function(sequelize, DataTypes) {
       associate: function(models){
         Receta.hasMany(models.Comentario);
         Receta.belongsTo(models.Categoria);
-        Receta.hasMany(models.Ingrediente);
+        Receta.belongsToMany(models.Ingrediente, {through: 'IngredientesReceta'});
       }
     }
   });

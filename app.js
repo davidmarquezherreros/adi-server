@@ -4,7 +4,10 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
-
+var usuarios = require('./routes/usuarios');
+var recetas = require('./routes/recetas');
+var comentarios = require('./routes/comentarios');
+var ingredientes = require('./routes/ingredientes');
 var routes = require('./routes/index');
 
 var app = express();
@@ -22,6 +25,11 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
+app.use('/usuarios',usuarios)
+app.use('/recetas',recetas)
+app.use('/comentarios',comentarios)
+app.use('/ingredientes',ingredientes)
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error('Not Found');
