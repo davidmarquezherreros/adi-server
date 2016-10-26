@@ -72,6 +72,33 @@ router.get('/:id/comentarios',function(pet, resp, next) {
     })
   }
 });
+// Añadir comentario una receta
+router.post('/:id/comentarios',BasicAuth.BasicAuth,function(pet, resp, next){
+  if(isNaN(pet.params.id)){
+    resp.status(400).send('Bad Request').end();
+  }
+  else{
+    var comentario = pet.body
+    if(comentario.mensaje){
+      models.Receta.find(pet.params.id).then(function(receta){
+        if(receta){
+          models.Comentario.create({
+            mensaje: comentario.mensaje,
+            RecetaId: pet.params.id
+          }).then(function(comentario){
+            resp.status(201).send(comentario);
+          });
+        }
+        else{
+          resp.status(400).send('Bad Request').end();
+        }
+      });
+    }
+    else{
+      resp.status(400).send('Bad Request').end();
+    }
+  }
+});
 
 // Crear receta
 router.post('/',BasicAuth.BasicAuth,function(pet,resp,next){
@@ -165,9 +192,6 @@ router.put('/:id/ingredientes/:id2',BasicAuth.BasicAuth,function(pet, resp, next
     })
   }
 });
-
-// Comentar una receta
-
 
 
 

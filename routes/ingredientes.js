@@ -40,6 +40,58 @@ router.get('/:id',function(pet, resp, next){
   }
 });
 // Modificar un ingrediente
-
+router.put('/:id', BasicAuth.BasicAuth, function(pet, resp, next){
+  var id = pet.params.id;
+  if(isNaN(id)){
+    resp.status(400).send('Bad request').end();
+  }
+  else{
+    var nuevo = pet.body;
+    if(nuevo.nombre && isNaN(nuevo.precio)==false){
+        models.Ingrediente.find(id).then(function(ingrediente){
+        if(ingrediente){
+          models.Ingrediente.update({
+            nombre: nuevo.nombre,
+            precio: nuevo.precio,
+          },{
+            where: {id: pet.params.id}
+          }).then(function(){
+            resp.status(204).send();
+          })
+        }
+        else{
+          resp.status(404).send("Resource not found");
+        }
+      })
+    }
+    else{
+      resp.status(400).send('Bad request').end();
+    }
+  }
+});
+// Crear ingrediente
+router.post('/', BasicAuth.BasicAuth, function(pet, resp, next){
+  var nuevo = pet.body;
+  if(nuevo.nombre && isNaN(nuevo.precio)==false){
+    models.Ingrediente.findOne({where: {nombre: nuevo.nombre}}).then(function(ing){
+      if(ing){
+        resp.header('Location','http://localhost:3000/usuarios/'+ing.id);
+        resp.status(201).send(ing).end();
+      }
+      else{
+        models.Ingrediente.create({
+          nombre: nuevo.nombre,
+          precio: nuevo.precio,
+        }).then(function(ingrediente){
+          resp.header('Location','http://localhost:3000/usuarios/'+ingrediente.id);
+          resp.status(201).send(ingrediente).end();
+        })
+      }
+    })
+  }
+  else{
+    resp.status(400).send('Bad request').end();
+  }
+})
 
 module.exports = router;

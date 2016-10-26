@@ -4,34 +4,35 @@ var models = require("../models");
 var BasicAuth = require('./BasicAuth');
 var Paginate = require('../paginate');
 
-// Listar todos los comentarios
+
+// Listar todas las categorias
 router.get('/',function(pet, resp, next){
-  models.Comentario.findAll().then(function(comentarios) {
+  models.Categoria.findAll().then(function(categorias) {
 
 		var opts = {
 			limit: parseInt(pet.query.limit) || 5,
 			page: parseInt(pet.query.page) || 1
 		};
 
-		var pager = new Paginate(comentarios, opts.limit);
+		var pager = new Paginate(categorias, opts.limit);
 		var result = {};
 
-		result.comentarios = pager.page(opts.page);
+		result.categorias = pager.page(opts.page);
 		result._links = pager.getLinks(pet);
 		resp.send(result);
-    
+
 	});
 });
 
-// Buscar comentario por id
+// Buscar categoria por id
 router.get('/:id',function(pet, resp, next) {
   if(isNaN(pet.params.id)){
     resp.status(400).send('Bad request').end();
   }
   else{
-    models.Comentario.find(pet.params.id).then(function(comentario){
-      if(comentario){
-          resp.status(200).send(comentario);
+    models.Categoria.find(pet.params.id).then(function(categoria){
+      if(categoria){
+          resp.status(200).send(categoria);
         }
         else{
           resp.status(400).send("Resource not found");
@@ -39,7 +40,7 @@ router.get('/:id',function(pet, resp, next) {
     })
   }
 });
-// Modificar un comentario
+// Modificar una categoria
 router.put('/:id', BasicAuth.BasicAuth, function(pet, resp, next){
   var id = pet.params.id;
   if(isNaN(id)){
@@ -47,11 +48,11 @@ router.put('/:id', BasicAuth.BasicAuth, function(pet, resp, next){
   }
   else{
     var nuevo = pet.body;
-    if(nuevo.mensaje){
-        models.Comentario.find(id).then(function(comentario){
-        if(comentario){
-          models.Comentario.update({
-            mensaje: nuevo.mensaje,
+    if(nuevo.nombre){
+        models.Categoria.find(id).then(function(categoria){
+        if(categoria){
+          models.Categoria.update({
+            nombre: nuevo.nombre,
           },{
             where: {id: pet.params.id}
           }).then(function(){
@@ -66,6 +67,21 @@ router.put('/:id', BasicAuth.BasicAuth, function(pet, resp, next){
     else{
       resp.status(400).send('Bad request').end();
     }
+  }
+})
+// Crear una categoria **FALTA MIRAR QUE nuevo.nombre no este en la BD**
+router.post('/', BasicAuth.BasicAuth, function(pet, resp, next){
+  var nuevo = pet.body;
+  if(nuevo.nombre){
+    models.Categoria.create({
+      nombre: nuevo.nombre
+    }).then(function(categoria){
+      resp.header('Location','http://localhost:3000/usuarios/'+categoria.id);
+      resp.status(201).send(categoria);
+    })
+  }
+  else{
+    resp.status(400).send('Bad request').end();
   }
 })
 
