@@ -1,0 +1,94 @@
+#%RAML 0.8
+title: Food
+version: v1
+baseUri: https://foodapi-dmarquezh.herokuapp.com
+
+securitySchemes:
+  - basic:
+      description: |
+              This API supports Basic Authentication.
+
+      type: Basic Authentication
+
+/usuarios:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+                "id": 1,
+                "nombre": "David",
+                "apellidos": "Marquez Herreros",
+                "email": "davidmarquez@email.com",
+                "_links": {
+                  "self": "/usuarios/",
+                  "first": "/usuarios/?page=1",
+                  "last": "/usuario/?page=1"
+                  }
+              }
+  /{usuario_id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "id": 1,
+                  "nombre": "David",
+                  "apellidos": "Marquez Herreros",
+                  "email": "davidmarquez@email.com"
+                }
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
+  /{usuario_id}/pedidos/{pedido_id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              {
+
+              }
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
+  put:
+  post:
+  delete:
+/recetas:
+  get:
+    responses:
+      200:
+        body:
+          application/json:
+            example: |
+              {
+
+              }
+  put:
+  post:
+  delete:
+/ingredientes:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+
+                }
+    delete:
+    post:
+    put:
+/pedidos:
+/categorias:
+/comentarios:

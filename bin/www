@@ -10,9 +10,9 @@ var models = require("../models");
 
 app.set('port', process.env.PORT || 3000);
 
-models.sequelize.sync({force:true}).then(function () {
+models.sequelize.sync({force:true}).then(function () { // FORCE = TRUE para reiniciarla cada vez que se lanza
 
-	/* Rellenando BD */
+	// Metemos datos de prueba en la base de datos
 	models.Categoria.bulkCreate([
 		{id: 1, nombre:'Carnes'},
 		{id: 2, nombre:'Pescados'},

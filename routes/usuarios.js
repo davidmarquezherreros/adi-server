@@ -35,7 +35,7 @@ router.get('/:id',function(pet, resp, next) {
           resp.status(200).send(user);
         }
         else{
-          resp.status(400).send("Resource not found");
+          resp.status(404).send("Resource not found");
         }
     })
   }
@@ -111,4 +111,86 @@ router.delete('/:id', BasicAuth.BasicAuth, function(pet, resp, next){
   }
 })
 
+// Crear pedido usuario
+router.post('/:id/pedidos/',BasicAuth.BasicAuth,function(pet, resp, next){
+  var id = pet.params.id;
+  if(isNaN(id)){
+    resp.status(400).send('Bad request').end();
+  }
+  else{
+    var pedido = pet.body;
+    models.Usuario.find(id).then(function(usuario){
+      if(usuario){
+        if(isNaN(pedido.precio)==false && isNaN(pedido.cantidad)===false){
+          models.Pedido.create({
+            Precio: pedido.precio,
+            Cantidad: pedido.cantidad,
+            UsuarioId: id
+          }).then(function(pedido){
+            resp.header('Location','http://localhost:3000/usuarios/'+id+'/pedidos/'+pedido.id);
+            resp.status(201).send(pedido).end();
+          });
+        }
+        else{
+          resp.status(400).send('Bad request').end();
+        }
+      }
+      else{
+        resp.status(400).send('Bad request').end();
+      }
+    });
+  }
+});
+// Conseguir todos los ingredientes de un pedido
+router.get('/:idUsuario/pedidos/:idPedido/ingredientes',BasicAuth.BasicAuth, function(pet,resp,next){
+  var id = pet.params.idUsuario;
+  if(isNaN(id) || isNaN(pet.params.idPedido)){
+    resp.status(400).send('Bad request').end();
+  }
+  else{
+    models.Usuario.find(id).then(function(usuario){
+      if(usuario){
+        models.Pedido.find(pet.params.idPedido).then(function(pedido){
+          if(pedido){
+            return pedido.getIngrediente();
+          }
+          else{
+            resp.status(404).send('Resource not found').end();
+          }
+        }).then(function(ingredientes){
+          resp.status(200).send(ingredientes);
+        })
+      }
+      else{
+        resp.status(404).send('Resource not found');
+      }
+    });
+  }
+});
+// Añadir ingrediente al pedido del usuario
+router.post('/:idUsuario/pedidos/:idPedido/ingredientes/:idIngrediente',BasicAuth.BasicAuth, function(pet, resp, next){
+  var id = pet.params.idUsuario;
+  if(isNaN(id) || isNaN(pet.params.idPedido) || isNaN(pet.params.idIngrediente)){
+    resp.status(400).send('Bad request').end();
+  }
+  else{
+    models.Pedido.find(pet.params.idPedido).then(function(pedido){
+      if(pedido){
+        models.Ingrediente.find(pet.params.idIngrediente).then(function(ingrediente){
+          if(ingrediente){
+            pedido.addIngrediente(ingrediente);
+            resp.header('Location','http://localhost:3000/usuarios/'+id+'/pedidos/'+pedido.id+'/ingredientes');
+            resp.status(201).send().end();
+          }
+          else{
+            resp.status(404).send('Resource not found').end();
+          }
+        });
+      }
+      else{
+        resp.status(404).send('Resource not found').end();
+      }
+    })
+  }
+});
 module.exports = router;

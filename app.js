@@ -7,6 +7,7 @@ var bodyParser = require('body-parser');
 var usuarios = require('./routes/usuarios');
 var recetas = require('./routes/recetas');
 var comentarios = require('./routes/comentarios');
+var pedidos = require('./routes/pedidos');
 var ingredientes = require('./routes/ingredientes');
 var categorias = require('./routes/categorias')
 var routes = require('./routes/index');
@@ -29,6 +30,7 @@ app.use('/', routes);
 app.use('/usuarios',usuarios)
 app.use('/recetas',recetas)
 app.use('/comentarios',comentarios)
+app.use('/pedidos',pedidos)
 app.use('/ingredientes',ingredientes)
 app.use('/categorias',categorias)
 

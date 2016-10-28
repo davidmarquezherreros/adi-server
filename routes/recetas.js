@@ -33,24 +33,8 @@ router.get('/:id',function(pet, resp, next) {
         resp.status(200).send(receta);
       }
       else{
-        resp.status(400).send("Resource not found");
+        resp.status(404).send("Resource not found");
       }
-    })
-  }
-});
-// Conseguir receta con un determinado id
-router.get('/:id',function(pet, resp, next) {
-  if(isNaN(pet.params.id)){
-    resp.status(400).send('Bad request').end();
-  }
-  else{
-    models.Receta.find(pet.params.id).then(function(receta){
-      if(receta){
-          resp.status(200).send(receta);
-        }
-        else{
-          resp.status(400).send("Resource not found");
-        }
     })
   }
 });
@@ -90,7 +74,7 @@ router.post('/:id/comentarios',BasicAuth.BasicAuth,function(pet, resp, next){
           });
         }
         else{
-          resp.status(400).send('Bad Request').end();
+          resp.status(404).send('Not Found').end();
         }
       });
     }
@@ -103,14 +87,22 @@ router.post('/:id/comentarios',BasicAuth.BasicAuth,function(pet, resp, next){
 // Crear receta
 router.post('/',BasicAuth.BasicAuth,function(pet,resp,next){
   var nuevo = pet.body;
-  if(nuevo.nombre && nuevo.descripcion && nuevo.dificultad && nuevo.categoria){
-    models.Receta.create({
-      nombre : nuevo.nombre,
-      descripcion : nuevo.descripcion,
-      dificultad : nuevo.dificultad,
-      CategoriaId : nuevo.categoria,
-    }).then(function(receta){
-      resp.status(200).send(receta);
+  if(nuevo.nombre && nuevo.descripcion && isNaN(nuevo.dificultad)==false && isNaN(nuevo.categoria)==false){
+    models.Categoria.find(nuevo.categoria).then(function(categoria){
+      if(categoria){
+        models.Receta.create({
+          nombre : nuevo.nombre,
+          descripcion : nuevo.descripcion,
+          dificultad : nuevo.dificultad,
+          CategoriaId : nuevo.categoria,
+        }).then(function(receta){
+          resp.header('Location',"http://localhost:3000/recetas/"+receta.id);
+          resp.status(201).send(receta);
+        })
+      }
+      else{
+        resp.status(404).send("Not found"); // CATEGORIA NOT FOUND
+      }
     })
   }
   else{
@@ -125,25 +117,32 @@ router.put('/:id',BasicAuth.BasicAuth, function(pet, resp, next){
     resp.status(400).send("Bad request").end();
   }
   else{
-    if(nuevo.nombre && nuevo.descripcion && nuevo.dificultad && nuevo.categoria){
-      models.Receta.find(pet.params.id).then(function(receta){
-        if(receta){
-          models.Receta.update(
-            {
-              nombre : nuevo.nombre,
-              descripcion : nuevo.descripcion,
-              dificultad : nuevo.dificultad,
-              CategoriaId : nuevo.categoria,
-            },{
-              where: {id: pet.params.id}
-            }).then(function(){
-              resp.status(204).send();
-            })
+    if(nuevo.nombre && nuevo.descripcion && isNaN(nuevo.dificultad)==false && isNaN(nuevo.categoria)==false){
+      models.Categoria.find(nuevo.categoria).then(function(categoria){
+        if(categoria){
+          models.Receta.find(pet.params.id).then(function(receta){
+            if(receta){
+              models.Receta.update(
+                {
+                  nombre : nuevo.nombre,
+                  descripcion : nuevo.descripcion,
+                  dificultad : nuevo.dificultad,
+                  CategoriaId : nuevo.categoria,
+                },{
+                  where: {id: pet.params.id}
+                }).then(function(){
+                  resp.status(204).send();
+                })
+            }
+            else{
+              resp.status(404).send("Resource not found").end();
+            }
+          })
         }
         else{
-          resp.status(404).send("Resource not found");
+          resp.status(404).send("Resource not found").end(); // Categoria no encontrada
         }
-      })
+      });
     }
     else{
       resp.status(400).send("Bad request").end();

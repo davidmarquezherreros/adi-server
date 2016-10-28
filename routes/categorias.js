@@ -35,7 +35,7 @@ router.get('/:id',function(pet, resp, next) {
           resp.status(200).send(categoria);
         }
         else{
-          resp.status(400).send("Resource not found");
+          resp.status(404).send("Resource not found");
         }
     })
   }
@@ -69,7 +69,7 @@ router.put('/:id', BasicAuth.BasicAuth, function(pet, resp, next){
     }
   }
 })
-// Crear una categoria **FALTA MIRAR QUE nuevo.nombre no este en la BD**
+// Crear una categoria
 router.post('/', BasicAuth.BasicAuth, function(pet, resp, next){
   var nuevo = pet.body;
   if(nuevo.nombre){
@@ -83,6 +83,23 @@ router.post('/', BasicAuth.BasicAuth, function(pet, resp, next){
   else{
     resp.status(400).send('Bad request').end();
   }
-})
-
+});
+// Listar todas las recetas de una categoria
+router.get('/:id/recetas',function(pet, resp, next){
+  if(isNaN(pet.params.id)){
+    resp.status(400).send('Bad request');
+  }
+  else{
+    models.Categoria.find(pet.params.id).then(function(categoria){
+      if(categoria){
+        models.Receta.findAll({where: {CategoriaId: pet.params.id} }).then(function(recetas){
+          resp.status(200).send(recetas);
+        });
+      }
+      else{
+        resp.status(404).send('Resource not found').end();
+      }
+    });
+  }
+});
 module.exports = router;

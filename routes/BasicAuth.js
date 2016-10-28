@@ -5,7 +5,6 @@ var router = express.Router();
 var auth = "dXN1YXJpbzoxMjM0NTY="
 
 exports.BasicAuth = function (pet, resp, next) {
-	//Si el auth está vacio
 	if(pet.headers.authorization==undefined) {
 		resp.status(401)
 		resp.setHeader('WWW-Authenticate', 'Basic realm="Necesitas iniciar sesión"');
