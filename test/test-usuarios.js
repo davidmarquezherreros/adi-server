@@ -5,7 +5,7 @@ var assert = require('assert');
 var rellenarBD = require('./rellenarBD');
 
 
-describe('test de la app web usuarios', function(){
+describe('Test de usuarios.js', function(){
 	//Inicializamos la BD antes de ejecutar los test
 	beforeEach('Reset BD',function (done) {
 		rellenarBD.rellenarBD().finally(function() {

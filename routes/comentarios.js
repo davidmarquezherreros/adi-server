@@ -19,7 +19,7 @@ router.get('/',function(pet, resp, next){
 		result.comentarios = pager.page(opts.page);
 		result._links = pager.getLinks(pet);
 		resp.send(result);
-    
+
 	});
 });
 
@@ -34,7 +34,7 @@ router.get('/:id',function(pet, resp, next) {
           resp.status(200).send(comentario);
         }
         else{
-          resp.status(400).send("Resource not found");
+          resp.status(404).send("Resource not found");
         }
     })
   }

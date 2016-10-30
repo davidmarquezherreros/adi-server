@@ -41,7 +41,7 @@ router.get('/:id',function(pet, resp, next) {
           resp.status(200).send(Pedido);
         }
         else{
-          resp.status(400).send("Resource not found");
+          resp.status(404).send("Resource not found");
         }
     })
   }

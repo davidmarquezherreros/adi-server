@@ -4,7 +4,7 @@ var supertest = require('supertest');
 var assert = require('assert');
 var rellenarBD = require('./rellenarBD');
 
-describe('test de la app web recetas', function(){
+describe('Test de categorias.js', function(){
 	//Inicializamos la BD antes de ejecutar los test
 	beforeEach(function (done) {
 		rellenarBD.rellenarBD().finally(function() {
