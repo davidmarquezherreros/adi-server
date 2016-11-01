@@ -78,23 +78,23 @@ securitySchemes:
         description:
           Updates an user given the ID
     delete:
-              responses:
-                204:
-                  body:
-                    text/plain:
-                      example: |
-                          No content
+      responses:
+        204:
+          body:
+            text/plain:
+              example: |
+                No content
 
-                400:
-                          body:
-                            text/plain:
-                              example: |
-                                Bad request
-                404:
-                          body:
-                            text/plain:
-                              example: |
-                                Resource not found
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
               description:
                 Deletes an user given the ID
 
@@ -139,13 +139,59 @@ securitySchemes:
               {
 
               }
-  put:
   post:
-  delete:
+    securedBy:
+      - basic
+  /{receta_id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+
+                }
+    delete:
+      securedBy:
+        - basic
+    put:
+      securedBy:
+        - basic
+  /{receta_id}/comentarios/:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+
+                }
+  /{receta_id}/ingredientes/:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+
+                }
+  /{receta_id}/ingredientes/{ingrediente_id}:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+
+                }
 /ingredientes:
   get:
     description:
-      Retrieve all the users
+      Retrieve all the ingredients
     responses:
       200:
         body:
@@ -153,19 +199,18 @@ securitySchemes:
             example: |
               {
                 "id": 1,
-                "nombre": "David",
-                "apellidos": "Marquez Herreros",
-                "email": "davidmarquez@email.com",
+                "nombre": "Aceite de oliva",
+                "precio": 3,
                 "_links": {
-                  "self": "/usuarios/",
-                  "first": "/usuarios/?page=1",
-                  "last": "/usuario/?page=1"
+                  "self": "/ingredientes/",
+                  "first": "/ingredientes/?page=1",
+                  "last": "/ingredientes/?page=1"
                   }
               }
   /{usuario_id}:
     get:
       description:
-        Retrieves an user given the ID
+        Retrieves an ingredient given the ID
       responses:
         200:
           body:
@@ -173,9 +218,8 @@ securitySchemes:
               example: |
                 {
                   "id": 1,
-                  "nombre": "David",
-                  "apellidos": "Marquez Herreros",
-                  "email": "davidmarquez@email.com"
+                  "nombre": "Aceite de oliva",
+                  "precio": 3
                 }
         400:
           body:
@@ -206,7 +250,7 @@ securitySchemes:
                         example: |
                           Resource not found
         description:
-          Updates an user given the ID
+          Updates an ingredient given the ID
     delete:
               responses:
                 204:
@@ -226,7 +270,7 @@ securitySchemes:
                               example: |
                                 Resource not found
               description:
-                Deletes an user given the ID
+                Deletes an ingredient given the ID
 /pedidos:
   get:
     description:
@@ -238,16 +282,16 @@ securitySchemes:
             example: |
               {
                 "id": 1,
-                "nombre": "David",
-                "apellidos": "Marquez Herreros",
-                "email": "davidmarquez@email.com",
+                "Cantidad": 2,
+                "Precio": 6,
+                "UsuarioId": 1,
                 "_links": {
-                  "self": "/usuarios/",
-                  "first": "/usuarios/?page=1",
-                  "last": "/usuario/?page=1"
+                  "self": "/pedidos/",
+                  "first": "/pedidos/?page=1",
+                  "last": "/pedidos/?page=1"
                   }
               }
-  /{usuario_id}:
+  /{pedido_id}:
     get:
       description:
         Retrieves an user given the ID
@@ -258,9 +302,9 @@ securitySchemes:
               example: |
                 {
                   "id": 1,
-                  "nombre": "David",
-                  "apellidos": "Marquez Herreros",
-                  "email": "davidmarquez@email.com"
+                  "Cantidad": 2,
+                  "Precio": 6,
+                  "UsuarioId": 1
                 }
         400:
           body:
@@ -281,41 +325,23 @@ securitySchemes:
                     No content
 
           400:
-                    body:
-                      text/plain:
-                        example: |
-                          Bad request
+            body:
+              text/plain:
+                example: |
+                  Bad request
           404:
-                    body:
-                      text/plain:
-                        example: |
-                          Resource not found
+            body:
+              text/plain:
+                example: |
+                  Resource not found
         description:
           Updates an user given the ID
-    delete:
-              responses:
-                204:
-                  body:
-                    text/plain:
-                      example: |
-                          No content
-
-                400:
-                          body:
-                            text/plain:
-                              example: |
-                                Bad request
-                404:
-                          body:
-                            text/plain:
-                              example: |
-                                Resource not found
-              description:
-                Deletes an user given the ID
+        securedBy:
+          - basic
 /categorias:
   get:
     description:
-      Retrieve all the users
+      Retrieve all the categories
     responses:
       200:
         body:
@@ -323,19 +349,17 @@ securitySchemes:
             example: |
               {
                 "id": 1,
-                "nombre": "David",
-                "apellidos": "Marquez Herreros",
-                "email": "davidmarquez@email.com",
+                "nombre": "Carnes",
                 "_links": {
-                  "self": "/usuarios/",
-                  "first": "/usuarios/?page=1",
-                  "last": "/usuario/?page=1"
+                  "self": "/categorias/",
+                  "first": "/categorias/?page=1",
+                  "last": "/categorias/?page=1"
                   }
               }
   /{categoria_id}:
     get:
       description:
-        Retrieves an user given the ID
+        Retrieves a category given the ID
       responses:
         200:
           body:
@@ -343,9 +367,7 @@ securitySchemes:
               example: |
                 {
                   "id": 1,
-                  "nombre": "David",
-                  "apellidos": "Marquez Herreros",
-                  "email": "davidmarquez@email.com"
+                  "nombre": "Carnes"
                 }
         400:
           body:
@@ -366,22 +388,23 @@ securitySchemes:
                     No content
 
           400:
-                    body:
-                      text/plain:
-                        example: |
-                          Bad request
+            body:
+              text/plain:
+                example: |
+                  Bad request
           404:
-                    body:
-                      text/plain:
-                        example: |
-                          Resource not found
+            body:
+              text/plain:
+                example: |
+                  Resource not found
         description:
-          Updates an user given the ID
+          Updates an order given the ID
         securedBy:
           - basic
     delete:
       securedBy:
         - basic
+      description: Deletes a category given the ID
       responses:
         204:
           body:
@@ -389,18 +412,47 @@ securitySchemes:
               example: |
                 No content
 
-                400:
-                  body:
-                    text/plain:
-                      example: |
-                        Bad request
-                404:
-                  body:
-                    text/plain:
-                      example: |
-                        Resource not found
-              description:
-                Deletes an category given the ID
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
+
+  /{categoria_id}/recetas:
+    get:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "id": 1,
+                  "nombre": "Ternera con parmesano",
+                  "descripcion": "Cocinas la carne y le pones parmesano",
+                  "dificultad": 1,
+                  "CategoriaId": 1
+                  ,
+                  "id": 2,
+                  "nombre": "Ternera con sal",
+                  "descripcion": "Cocinas la carne y le pones sal",
+                  "dificultad": 1,
+                  "CategoriaId": 1
+                }
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
 /comentarios:
   get:
     description:
@@ -462,23 +514,5 @@ securitySchemes:
                   Resource not found
         description:
           Updates a comment given the ID
-    delete:
-      responses:
-        204:
-          body:
-            text/plain:
-              example: |
-                No content
-
-        400:
-          body:
-            text/plain:
-              example: |
-                Bad request
-        404:
-          body:
-            text/plain:
-              example: |
-                Resource not found
-              description:
-                Deletes an user given the ID
+        securedBy:
+          - basic
