@@ -1,8 +1,8 @@
 #%RAML 0.8
-title: Food
-version: v1
+title: Recetas
 baseUri: https://foodapi-dmarquezh.herokuapp.com
 
+version: 1.0
 securitySchemes:
   - basic:
       description: |
@@ -77,7 +77,16 @@ securitySchemes:
                           Resource not found
         description:
           Updates an user given the ID
+        body:
+          application/json:
+            schema: |
+              {
+                "nombre":"David",
+                "apellidos":"Marquez Herreros",
+                "email":"davidmarquezherreros@email.com"
+              }
     delete:
+      description: Deletes an user given the ID
       responses:
         204:
           body:
@@ -115,6 +124,54 @@ securitySchemes:
             text/plain:
               example: |
                 Resource not found
+      body:
+        application/json:
+          schema: |
+            {
+              "cantidad": 100,
+              "precio": 1
+            }
+  /{usuario_id}/pedidos/{pedido_id}/ingredientes:
+    get:
+      description: Retrieves all the ingredients of an order
+      securedBy:
+        - basic
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "id": 12,
+                  "nombre": "Jamon york",
+                  "precio": 13
+                }
+        400:
+          body:
+            text/plain:
+              example: Bad request
+        404:
+          body:
+            text/plain:
+              example: Resource not found
+  /{usuario_id}/pedidos/{pedido_id}/ingredientes/{id_ingrediente}:
+    post:
+      description: Adds a new ingredient to the order
+      securedBy:
+        - basic
+      responses:
+        201:
+          body:
+            text/plain:
+              example: Created
+        400:
+          body:
+            text/plain:
+              example: Bad request
+        404:
+          body:
+            text/plain:
+              example: Resource not found
   post:
     responses:
       201:
@@ -129,65 +186,198 @@ securitySchemes:
               Bad request
     securedBy:
       - basic
+    body:
+      application/json:
+        schema: |
+          {
+            "nombre":"David",
+            "apellidos":"Marquez",
+            "email":"davidmarquez@email.com"
+          }
 /recetas:
   get:
+    description: Retrieves all the recipes
     responses:
       200:
         body:
           application/json:
             example: |
               {
-
+                "id": 1,
+                "nombre": "Ternera con parmesano",
+                "descripcion": "Cocinas la carne y le pones parmesano",
+                "dificultad": 1,
+                "CategoriaId": 1,
+                "_links": {
+                  "self": "/recetas",
+                  "first": "/recetas/?page=1",
+                  "last": "/recetas/?page=1",
+                  "next": "/recetas/?page=1"
+                }
               }
   post:
+    responses:
+      201:
+        body:
+          text/plain:
+            example: |
+              Created
+      400:
+        body:
+          text/plain:
+            example: |
+              Bad request
     securedBy:
       - basic
+
+    description: Creates a new recipe
+    body:
+      application/json:
+        schema: |
+          {
+          "nombre": "jamon serrano",
+          "precio": 20
+          }
   /{receta_id}:
     get:
+      description: Retrieves a recipe given the ID
       responses:
         200:
           body:
             application/json:
               example: |
                 {
-
+                  "id": 1,
+                  "nombre": "Ternera con parmesano",
+                  "descripcion": "Cocinas la carne y le pones parmesano",
+                  "dificultad": 1,
+                  "CategoriaId": 1
                 }
     delete:
+      responses:
+        204:
+          body:
+            text/plain:
+              example: |
+                No content
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
       securedBy:
         - basic
+      description: Deletes a recipe given the ID
     put:
-      securedBy:
-        - basic
+      description: Updates a recipe given the ID
+      responses:
+        204:
+          body:
+            text/plain:
+              example: |
+                No content
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
+      body:
+        application/json:
+          schema: |
+            {
+              "nombre": "jamon serrano",
+              "precio": 20
+            }
+    securedBy:
+      - basic
   /{receta_id}/comentarios/:
     get:
+      description: Retrieves all the comments of the recipe given the ID
       responses:
         200:
           body:
             application/json:
               example: |
                 {
-
+                    "id": 1,
+                    "mensaje": "Comentario 1",
+                    "RecetaId": 1,
+                    "id": 2,
+                    "mensaje": "Comentario 2",
+                    "RecetaId": 1,
+                    "id": 3,
+                    "mensaje": "Comentario 3",
+                    "RecetaId": 1
                 }
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
   /{receta_id}/ingredientes/:
     get:
+      description: Retrieves all the ingredients of the recipe with ID = receta_id
       responses:
         200:
           body:
             application/json:
               example: |
                 {
-
+                "id": 11,
+                "nombre": "jamon serrano",
+                "precio": 20
                 }
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
   /{receta_id}/ingredientes/{ingrediente_id}:
-    get:
+    put:
+      description: Adds ingredient = ingrediente_id to the recipe with ID = receta_id
       responses:
-        200:
+        204:
           body:
-            application/json:
+            text/plain:
               example: |
-                {
-
-                }
+                No content
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
+      body:
+        application/json:
+          schema: |
+            {
+              "nombre": "jamon serrano",
+              "precio": 20
+            }
 /ingredientes:
   get:
     description:
@@ -207,7 +397,7 @@ securitySchemes:
                   "last": "/ingredientes/?page=1"
                   }
               }
-  /{usuario_id}:
+  /{ingrediente_id}:
     get:
       description:
         Retrieves an ingredient given the ID
@@ -232,49 +422,79 @@ securitySchemes:
               example: |
                 Resource not found
     put:
-        responses:
-          204:
-            body:
-              text/plain:
-                example: |
-                    No content
+      description: Updates an ingredient given the ID
+      securedBy:
+        - basic
+      responses:
+        204:
+          body:
+            text/plain:
+              example: |
+                No content
 
-          400:
-                    body:
-                      text/plain:
-                        example: |
-                          Bad request
-          404:
-                    body:
-                      text/plain:
-                        example: |
-                          Resource not found
-        description:
-          Updates an ingredient given the ID
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
+      body:
+        application/json:
+          schema: |
+            {
+              "nombre": "Aceite de oliva",
+              "precio": 3
+            }
+
     delete:
-              responses:
-                204:
-                  body:
-                    text/plain:
-                      example: |
-                          No content
-
-                400:
-                          body:
-                            text/plain:
-                              example: |
-                                Bad request
-                404:
-                          body:
-                            text/plain:
-                              example: |
-                                Resource not found
+      description: Deletes the ingredient given the ID
+      responses:
+        204:
+          body:
+            text/plain:
+              example: |
+                No content
+        400:
+          body:
+            text/plain:
+              example: |
+                Bad request
+        404:
+          body:
+            text/plain:
+              example: |
+                Resource not found
               description:
                 Deletes an ingredient given the ID
+  post:
+    description: Creates a new ingredient
+    securedBy:
+      - basic
+    body:
+      application/json:
+        schema: |
+          {
+            "nombre":"nombre igrediente",
+            "precio": 1
+          }
+    responses:
+      201:
+        body:
+          text/plain:
+            example: Bad request
+      400:
+        body:
+          text/plain:
+            example: |
+              Bad request
 /pedidos:
   get:
     description:
-      Retrieve all the users
+      Retrieve all the orders
     responses:
       200:
         body:
@@ -294,7 +514,7 @@ securitySchemes:
   /{pedido_id}:
     get:
       description:
-        Retrieves an user given the ID
+        Retrieves an order given the ID
       responses:
         200:
           body:
@@ -338,6 +558,14 @@ securitySchemes:
           Updates an user given the ID
         securedBy:
           - basic
+        body:
+          application/json:
+            schema: |
+              {
+                "Cantidad": 2,
+                "Precio": 6,
+                "UsuarioId": 1
+              }
 /categorias:
   get:
     description:
@@ -401,6 +629,12 @@ securitySchemes:
           Updates an order given the ID
         securedBy:
           - basic
+        body:
+          application/json:
+            schema: |
+              {
+                "nombre": "nombre categoria"
+              }
     delete:
       securedBy:
         - basic
@@ -516,3 +750,9 @@ securitySchemes:
           Updates a comment given the ID
         securedBy:
           - basic
+        body:
+          application/json:
+            schema: |
+              {
+              "mensaje": "comentario "
+              }
