@@ -314,9 +314,9 @@
 </code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h3>Body</h3><p><strong>Type: text/plain</strong></p><p><strong>Example</strong>:</p><pre><code>Bad request
 </code></pre><h2>HTTP status code <a href="http://httpstatus.es/404" target="_blank">404</a></h2><h3>Body</h3><p><strong>Type: text/plain</strong></p><p><strong>Example</strong>:</p><pre><code>Resource not found
 </code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="pedidos__pedido_id__put"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_put">put <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/pedidos</span>/{pedido_id}</h4></div><div class="modal-body"><div class="alert alert-info"><p>Updates an user given the ID</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by <b>basic</b><p>This API supports Basic Authentication. Username: usuario Password: 123456</p></div><ul class="nav nav-tabs"><li class="active"><a href="#pedidos__pedido_id__put_request" data-toggle="tab">Request</a></li><li><a href="#pedidos__pedido_id__put_response" data-toggle="tab">Response</a></li><li><a href="#pedidos__pedido_id__put_securedby" data-toggle="tab">Security</a></li></ul><div class="tab-content"><div class="tab-pane active" id="pedidos__pedido_id__put_request"><h3>URI Parameters</h3><ul><li><strong>pedido_id</strong>: <em>required (string)</em></li></ul><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Schema</strong>:</p><pre><code>{
-  "Cantidad": 2,
-  "Precio": 6,
-  "UsuarioId": 1
+  "cantidad": 2,
+  "precio": 6,
+  "usuarioId": 1
 }
 </code></pre></div><div class="tab-pane" id="pedidos__pedido_id__put_response"><h2>HTTP status code <a href="http://httpstatus.es/204" target="_blank">204</a></h2><h3>Body</h3><p><strong>Type: text/plain</strong></p><p><strong>Example</strong>:</p><pre><code>No content
 </code></pre><h2>HTTP status code <a href="http://httpstatus.es/400" target="_blank">400</a></h2><h3>Body</h3><p><strong>Type: text/plain</strong></p><p><strong>Example</strong>:</p><pre><code>Bad request
