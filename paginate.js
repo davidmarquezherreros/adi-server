@@ -1,17 +1,17 @@
-function Paginate (data, perPage) {
+function Paginate (datos, cuantosPorPagina) {
 
-	if (!data) throw new Error('Required Argument Missing')
-	if (!(data instanceof Array)) throw new Error('Invalid Argument Type')
+	if (!datos) throw new Error('Required Argument Missing')
+	if (!(datos instanceof Array)) throw new Error('Invalid Argument Type')
 
-	this.data = data
-	this.perPage = perPage || 10
+	this.datos = datos
+	this.cuantosPorPagina = cuantosPorPagina || 10
 	this.currentPage = 0
-	this.totalPages = Math.ceil(this.data.length / this.perPage)
+	this.totalPages = Math.ceil(this.datos.length / this.cuantosPorPagina)
 }
 
 Paginate.prototype.offset = function () {
 
-	return ((this.currentPage - 1) * this.perPage);
+	return ((this.currentPage - 1) * this.cuantosPorPagina);
 }
 
 Paginate.prototype.page = function (pageNum) {
@@ -22,9 +22,9 @@ Paginate.prototype.page = function (pageNum) {
 	this.currentPage = pageNum
 
 	var start = this.offset()
-	  , end = start + this.perPage
+	  , end = start + this.cuantosPorPagina
 
-	return this.data.slice(start, end);
+	return this.datos.slice(start, end);
 }
 
 Paginate.prototype.hasNext = function () {
@@ -42,14 +42,14 @@ Paginate.prototype.getLinks = function (req) {
 	var baseUrl = req.baseUrl + req.url.split('?')[0];
 
 	var links = {
-		self 	 : "https://foodapi-dmarquezh.herokuapp.com" + req.originalUrl,
-		first	 : "https://foodapi-dmarquezh.herokuapp.com" + baseUrl + "?page=" + 1,
-		last	 : "https://foodapi-dmarquezh.herokuapp.com" + baseUrl + "?page=" + this.totalPages
+		self 	 : "http://localhost:3000" + req.originalUrl,
+		first	 : "http://localhost:3000" + baseUrl + "?page=" + 1,
+		last	 : "http://localhost:3000" + baseUrl + "?page=" + this.totalPages
 	};
 	if (this.hasNext())
-		links.next = "https://foodapi-dmarquezh.herokuapp.com" + baseUrl + "?page=" + (this.currentPage+1);
+		links.next = "http://localhost:3000" + baseUrl + "?page=" + (this.currentPage+1);
 	if (this.hasPrev())
-		links.prev = "https://foodapi-dmarquezh.herokuapp.com" + baseUrl + "?page=" + (this.currentPage-1);
+		links.prev = "http://localhost:3000" + baseUrl + "?page=" + (this.currentPage-1);
 
 	return links;
 }
