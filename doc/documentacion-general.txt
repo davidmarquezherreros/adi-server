@@ -1,0 +1,15 @@
+La documentacion de los casos de uso esta en:
+  · https://foodapi-dmarquezh.herokuapp.com/doc
+  · Los originales estan en:
+    · doc/api.raml y doc/documentacion.html
+  · Cuando se solicite cualquier coleccion de articulos no se cargan los objetos adicionales asociado
+    a este para evitar sobrecargar el servidor.
+
+Historias de usuario:
+  · Como cliente quiero consultar todas las recetas de una categoria via API.
+      1º Buscariamos las categorias disponibles. GET /categorias/
+      2º Consultariamos las recetas de una categoria. GET /categorias/[id_categoria]/recetas
+
+  · Como cliente quiero consultar todos mis pedidos via API.
+      1º Buscariamos nuestro id. GET /usuarios/
+      2º Consultariamos los pedidos del usuario. GET /usuarios/[id_usuario]/pedidos

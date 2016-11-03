@@ -141,6 +141,31 @@ router.post('/:id/pedidos/',BasicAuth.BasicAuth,function(pet, resp, next){
     });
   }
 });
+// Conseguir todos los pedidos de un usuario
+router.get('/:id/pedidos/',BasicAuth.BasicAuth,function(pet, resp, next){
+  var id = pet.params.id;
+  if(isNaN(id)){
+    resp.status(400).send('Bad request').end();
+  }
+  else{
+    var pedido = pet.body;
+    models.Usuario.find(id).then(function(usuario){
+      if(usuario){
+        models.Pedido.findAll({where : {UsuarioId: pet.params.id}}).then(function(pedidos){
+          if(pedidos){
+            resp.status(200).send(pedidos);
+          }
+          else{
+            resp.status(404).send('Resource not found').end();
+          }
+        })
+      }
+      else{
+        resp.status(400).send('Bad request').end();
+      }
+    });
+  }
+});
 // Conseguir todos los ingredientes de un pedido
 router.get('/:idUsuario/pedidos/:idPedido/ingredientes',BasicAuth.BasicAuth, function(pet,resp,next){
   var id = pet.params.idUsuario;
