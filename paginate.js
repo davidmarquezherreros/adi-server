@@ -42,14 +42,14 @@ Paginate.prototype.getLinks = function (req) {
 	var baseUrl = req.baseUrl + req.url.split('?')[0];
 
 	var links = {
-		self 	 : req.originalUrl,
-		first	 : baseUrl + "?page=" + 1,
-		last	 : baseUrl + "?page=" + this.totalPages
+		self 	 : "https://foodapi-dmarquezh.herokuapp.com" + req.originalUrl,
+		first	 : "https://foodapi-dmarquezh.herokuapp.com" + baseUrl + "?page=" + 1,
+		last	 : "https://foodapi-dmarquezh.herokuapp.com" + baseUrl + "?page=" + this.totalPages
 	};
 	if (this.hasNext())
-		links.next = baseUrl + "?page=" + (this.currentPage+1);
+		links.next = "https://foodapi-dmarquezh.herokuapp.com" + baseUrl + "?page=" + (this.currentPage+1);
 	if (this.hasPrev())
-		links.prev = baseUrl + "?page=" + (this.currentPage-1);
+		links.prev = "https://foodapi-dmarquezh.herokuapp.com" + baseUrl + "?page=" + (this.currentPage-1);
 
 	return links;
 }
