@@ -117,6 +117,7 @@ securitySchemes:
     post:
       securedBy:
         - basic
+      description: Creates a new order for the specified user
       responses:
         201:
           body:
@@ -135,6 +136,31 @@ securitySchemes:
               "cantidad": 100,
               "precio": 1
             }
+
+    get:
+      description: Retrieves all the orders placed by the specified user
+      body:
+        application/json:
+      responses:
+        200:
+          body:
+            application/json:
+              example: |
+                {
+                  "id" : 1,
+                  "Cantidad" : 2,
+                  "Precio" : 6,
+                  "UsuarioId" : 1
+                }
+
+        400:
+          body:
+            text/plain:
+              example: Bad request
+        404:
+          body:
+            text/plain:
+              example: Resource not found
   /{usuario_id}/pedidos/{pedido_id}/ingredientes:
     get:
       description: Retrieves all the ingredients of an order
@@ -190,6 +216,7 @@ securitySchemes:
               Bad request
     securedBy:
       - basic
+    description: Creates a new user
     body:
       application/json:
         schema: |
@@ -667,6 +694,7 @@ securitySchemes:
 
   /{categoria_id}/recetas:
     get:
+      description: Retrieves all the recipes with the category specified
       responses:
         200:
           body:
