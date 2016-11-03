@@ -77,6 +77,8 @@ securitySchemes:
                           Resource not found
         description:
           Updates an user given the ID
+        securedBy:
+          - basic
         body:
           application/json:
             schema: |
@@ -87,6 +89,8 @@ securitySchemes:
               }
     delete:
       description: Deletes an user given the ID
+      securedBy:
+        - basic
       responses:
         204:
           body:
@@ -355,6 +359,8 @@ securitySchemes:
   /{receta_id}/ingredientes/{ingrediente_id}:
     put:
       description: Adds ingredient = ingrediente_id to the recipe with ID = receta_id
+      securedBy:
+        - basic
       responses:
         204:
           body:
