@@ -27,7 +27,8 @@ exports.rellenarBD = function() {
 					{id: 9, nombre:'Rosario', apellidos:'Api',email: 'rosario.api@email.com'},
 					{id: 10, nombre:'Nestor', apellidos:'Api',email: 'nestor.api@email.com'},
 					{id: 11, nombre:'Jose', apellidos:'Api',email: 'jose.api@email.com'},
-					{id: 12, nombre:'Carlos', apellidos:'Api',email: 'juan.api@email.com'}
+					{id: 12, nombre:'Carlos', apellidos:'Api',email: 'juan.api@email.com'},
+					{id: 13, nombre:'usuario', apellidos:'default',email:'default',password:'123456'}
 				]).then(function() {
 						return models.Ingrediente.bulkCreate([
 						{id: 1, nombre: 'Aceite de oliva', precio: 3},

@@ -20,7 +20,7 @@ models.sequelize.sync({force:true}).then(function () { // FORCE = TRUE para rein
 		{id: 4, nombre:'Tapas'}
 	]).then(function() {
 			models.Usuario.bulkCreate([
-				{id: 1, nombre:'Lucas',apellidos: 'Api', email: 'lucas.api@email.com'},
+				{id: 1, nombre:'Lucas',apellidos: 'Api', email: 'lucas.api@email.com', password:'123456'},
 				{id: 2, nombre:'Ana',apellidos: 'Api', email: 'ana.api@email.com'},
 				{id: 3, nombre:'Juan', apellidos:'Api',email: 'juan.api@email.com'},
 				{id: 4, nombre:'Pedro', apellidos:'Api',email: 'pedro.api@email.com'},
@@ -44,6 +44,13 @@ models.sequelize.sync({force:true}).then(function () { // FORCE = TRUE para rein
           {id: 8, nombre: 'Sal', precio: 1},
           {id: 9, nombre: 'Agua', precio: 1},
           {id: 10, nombre: 'Pimienta', precio: 1},
+					{id: 15, nombre: 'Cacao', precio: 4},
+					{id: 16, nombre: 'Perejil', precio: 2},
+					{id: 17, nombre: 'Canela', precio: 5},
+					{id: 18, nombre: 'Pimiento rojo', precio: 1},
+					{id: 19, nombre: 'Pimiento verde', precio: 1},
+					{id: 20, nombre: 'Pollo', precio: 7},
+					{id: 21, nombre: 'Pavo', precio: 8},
         ]).then(function(){
           models.Receta.bulkCreate([
             {id: 1, nombre: 'Ternera con parmesano', descripcion:'Cocinas la carne y le pones parmesano',dificultad: 1, CategoriaId: 1},

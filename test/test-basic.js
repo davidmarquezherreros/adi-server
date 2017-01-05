@@ -2,8 +2,14 @@ var app = require('../app');
 var models = require('../models');
 var supertest = require('supertest');
 var assert = require('assert');
+var rellenarBD = require('./rellenarBD');
 
 describe('Test de BasicAuth.js', function(){
+  beforeEach(function (done) {
+    rellenarBD.rellenarBD().finally(function() {
+      done();
+    });
+  });
   it('POST / crear una categoria sin error en la autentificacion, se espera 400', function(done){
     var categoria = {nombre : "categoria de prueba"};
     supertest(app)

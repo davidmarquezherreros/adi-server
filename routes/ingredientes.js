@@ -94,4 +94,26 @@ router.post('/', BasicAuth.BasicAuth, function(pet, resp, next){
   }
 })
 
+router.delete('/:id', BasicAuth.BasicAuth, function(pet,resp,next){
+  var id = pet.params.id;
+  if(isNaN(id)==false){
+    models.Ingrediente.find(id).then(function(ingrediente){
+      if(ingrediente){
+        models.Ingrediente.destroy({
+          where: {
+            id: id
+          }
+        }).then(function(){
+          resp.status(204).send().end();
+        })
+      }
+      else{
+        resp.status(404).send().end();
+      }
+    })
+  }
+  else{
+    resp.status(400).send('Bad request').end();
+  }
+});
 module.exports = router;

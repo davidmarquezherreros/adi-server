@@ -42,14 +42,14 @@ Paginate.prototype.getLinks = function (req) {
 	var baseUrl = req.baseUrl + req.url.split('?')[0];
 
 	var links = {
-		self 	 : "http://localhost:3000" + req.originalUrl,
-		first	 : "http://localhost:3000" + baseUrl + "?page=" + 1,
-		last	 : "http://localhost:3000" + baseUrl + "?page=" + this.totalPages
+		self 	 : req.originalUrl,
+		first	 : baseUrl + "?page=" + 1,
+		last	 : baseUrl + "?page=" + this.totalPages
 	};
 	if (this.hasNext())
-		links.next = "http://localhost:3000" + baseUrl + "?page=" + (this.currentPage+1);
+		links.next = baseUrl + "?page=" + (this.currentPage+1);
 	if (this.hasPrev())
-		links.prev = "http://localhost:3000" + baseUrl + "?page=" + (this.currentPage-1);
+		links.prev = baseUrl + "?page=" + (this.currentPage-1);
 
 	return links;
 }

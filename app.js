@@ -10,6 +10,7 @@ var comentarios = require('./routes/comentarios');
 var pedidos = require('./routes/pedidos');
 var ingredientes = require('./routes/ingredientes');
 var categorias = require('./routes/categorias')
+var login = require('./routes/login')
 var routes = require('./routes/index');
 
 var app = express();
@@ -24,9 +25,20 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use('/web',express.static('web'));
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.get('/api/saludo', function (pet, resp) {
+    var mensajes = ['Hola soy el API', '¿Qué tal, React?', 'EYYYYYYYY!!!']
+    var obj = {
+        mensaje: mensajes[Math.floor(Math.random()*mensajes.length)],
+        hora: new Date().toLocaleTimeString()
+    }
+    resp.json(obj);
+});
+
 app.use('/', routes);
+app.use('/login', login);
 app.use('/usuarios',usuarios)
 app.use('/recetas',recetas)
 app.use('/comentarios',comentarios)
@@ -42,6 +54,7 @@ app.use(function(req, res, next) {
   err.status = 404;
   next(err);
 });
+
 
 // error handlers
 
