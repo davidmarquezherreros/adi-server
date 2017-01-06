@@ -17,6 +17,9 @@ var SesionComponente = React.createClass({
            localStorage.setItem("Credenciales", envio);
            localStorage.setItem("Nombre", login.usuario);
          }
+         else{
+           error.render()
+         }
        })
        this.setState({nombre: login.usuario});
     },
@@ -30,12 +33,12 @@ var SesionComponente = React.createClass({
           if(localStorage.getItem("Credenciales")==""){
           return (
               <div>
-                <h1>Iniciar sesión</h1>
+                <legend>Iniciar sesión</legend>
                   <input type="text" placeholder="Usuario..."
                      ref={(campo)=>{this.campoUsuario=campo}}/> <br/>
                    <input type="password" placeholder="Password..."
                      ref={(campo)=>{this.campoPassword=campo}}/> <br/>
-                  <button onClick={this.clickAdd}>Iniciar sesión</button>
+                   <button onClick={this.clickAdd} className="btn btn-primary">Iniciar sesión</button>
               </div>
               );
         }

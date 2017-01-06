@@ -7,7 +7,7 @@ module.exports = React.createClass({
     render: function () {
         return <div className="detallesItem">
               <span className="nombre">{this.props.nombre}</span>&nbsp;-&nbsp;
-              <span className="precio">Precio: {this.props.precio} €</span>&nbsp;
+              <span className="precio">Precio: {this.props.precio} <span className="glyphicon glyphicon-euro" aria-hidden="true"></span></span>&nbsp;
               <span className="id">Id: {this.props.id}</span>&nbsp;&nbsp;
               <a href="#" onClick={this.ocultarDetalles}>Ocultar detalles</a>
             </div>

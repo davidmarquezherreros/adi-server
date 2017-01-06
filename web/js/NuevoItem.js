@@ -14,12 +14,12 @@ var NuevoItemComponente = React.createClass({
     },
     render: function () {
         return <div>
-            <h1>Nuevo ingrediente</h1>
+            <legend>Nuevo ingrediente</legend>
             <input type="text" placeholder="Nombre..."
                    ref={(campo)=>{this.campoNombre=campo}}/> <br/>
                  <input type="number" placeholder="Precio..."
                    ref={(campo)=>{this.campoPrecio=campo}}/> <br/>
-            <button onClick={this.clickAdd} className="btn btn-default">Añadir</button>
+                 <button onClick={this.clickAdd} className="btn btn-primary">Añadir</button>
         </div>
     }
 })

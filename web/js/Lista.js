@@ -74,7 +74,6 @@ module.exports = React.createClass({
           })
     },
     delete:function(i){
-      console.log(this.state.items.ingredientes[i].id)
       API_lista.deleteIngrediente(this.state.items.ingredientes[i].id);
     },
     verModificacion: function (i) {

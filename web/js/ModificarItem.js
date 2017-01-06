@@ -22,8 +22,8 @@ var ModificarItemComponente = React.createClass({
                    ref={(campo)=>{this.campoNombre=campo}}/> <br/>
                  <input type="number" placeholder="Precio..." defaultValue={this.props.precio}
                    ref={(campo)=>{this.campoPrecio=campo}}/> <br/>
-            <button onClick={this.clickModify}>Modificar</button>
-            <button onClick={this.ocultarModificacion}>Ocultar Modificacion</button>
+                 <button onClick={this.clickModify} className="btn btn-primary">Modificar</button>
+            <button onClick={this.ocultarModificacion} className="btn btn-primary">Ocultar Modificacion</button>
         </div>
     }
 })
