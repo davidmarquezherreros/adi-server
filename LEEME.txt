@@ -1,0 +1,15 @@
+- React.js
+  1. Para ponerla en funcionamiento:
+     Ejecutamos el comando: nodemon start y en otra ventana ejecutamos npm run watch.
+  2. Para acceder al cliente vamos a: localhost:3000/web
+  3. Funcionalidades optativas
+     a. Estilo visual web
+     b. Mensajes al usuario
+     
+- Handlebars + JS estandar
+  1. Para ponerla en funcionamiento:
+     Ejecutamos el comando: nodemon start y en otra ventana ejecutamos npm run handlebars.
+  2. Para acceder al cliente vamos a: localhost:3000/handlebars
+  3. Funcionalidades optativas
+     a. Estilo visual web
+     b. Mensajes al usuario
