@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Página principal</title>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="public/js/jquery-3.1.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<body style="margin:5px; padding:5px">
+
+   <h1>Lista de ingredientes con Handlebars + JS</h1>
+   <div id="login" class="form-group" className="form-group">
+     <form>
+      <legend>Iniciar sesión</legend>
+
+      <label for="usuario">Usuario:</label> <input type="text" id="usuario_login"> <br>
+      <label for="nuevo_precio">Contraseña:</label> <input type="password" id="password_login"> <br>
+      <input type="button" value="Iniciar sesión" id="boton_iniciar_sesion" class="btn btn-primary">
+     </form>
+   </div>
+   <div id="nuevo_item">
+     <form>
+      <legend>Nuevo item</legend>
+      <label for="nuevo_nombre">Nombre:</label> <input type="text" id="nuevo_nombre"> <br>
+      <label for="nuevo_precio">Precio:</label> <input type="number" id="nuevo_precio"> <br>
+      <input type="button" value="Añadir" id="boton_add_item" class="btn btn-primary">
+     </form>
+  </div>
+   <div id="miComponente">
+
+   </div>
+   <div id="error">
+   </div>
+   <script src="js/bundle.js"></script>
+   <script type="text/javascript">
+      $(document).ready(function() {
+        if(localStorage.getItem("Credenciales")!=""){
+          var div = document.getElementById('login')
+          var nombre = localStorage.getItem("Nombre");
+          div.innerHTML = "<h2>"+nombre+"</h2>";
+          div.innerHTML += "<input type=\"button\" value=\"Cerrar sesión\" id=\"boton_cerrar_sesion\" class=\"btn btn-primary\">"
+        }
+      })
+      $(document).ready(function(e) {
+          $("#boton_cerrar_sesion").click(function(e) {
+            localStorage.setItem("Credenciales","");
+            localStorage.setItem("Nombre","");
+            location.reload();
+          });
+        })
+   </script>
+</body>
+</html>

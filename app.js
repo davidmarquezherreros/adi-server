@@ -26,6 +26,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use('/web',express.static('web'));
+app.use('/handlebars',express.static('handlebars'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/api/saludo', function (pet, resp) {
