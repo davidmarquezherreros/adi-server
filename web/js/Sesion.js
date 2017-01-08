@@ -1,6 +1,7 @@
 var React = require('react')
 var API = require('./servicios/API')
 var EventBus = require('./servicios/EventBus')
+var ErrorReact = require('./ErrorReact')
 
 var SesionComponente = React.createClass({
     getInitialState : function () {
@@ -16,9 +17,10 @@ var SesionComponente = React.createClass({
          if(ok==true){
            localStorage.setItem("Credenciales", envio);
            localStorage.setItem("Nombre", login.usuario);
+           localStorage.setItem("ErrorReact","");
          }
          else{
-           error.render()
+           localStorage.setItem("ErrorReact","Usuario/Contraseña incorrecta intentelo de nuevo!");
          }
        })
        this.setState({nombre: login.usuario});
@@ -39,6 +41,7 @@ var SesionComponente = React.createClass({
                    <input type="password" placeholder="Password..."
                      ref={(campo)=>{this.campoPassword=campo}}/> <br/>
                    <button onClick={this.clickAdd} className="btn btn-primary">Iniciar sesión</button>
+                   <ErrorReact />
               </div>
               );
         }

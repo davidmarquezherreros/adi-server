@@ -26,7 +26,8 @@ module.exports = React.createClass({
        this.setState({modifica:undefined})
     },
     refrescarItems: function () {
-        API_lista.obtenerItems('')
+        var limit = "?limit="+this.props.tamPagina
+        API_lista.obtenerItems('',limit)
             .then(datos => {
                 this.setState({items: datos})
             })
@@ -40,7 +41,8 @@ module.exports = React.createClass({
     paginatePrimera: function(){
       var url = this.state.items._links.first
       var page = url.substring(url.lastIndexOf('/'),url.length);
-      API_lista.obtenerItems(page)
+      var limit = "&&limit="+this.props.tamPagina
+      API_lista.obtenerItems(page,limit)
           .then(datos => {
               this.setState({items: datos})
           })
@@ -49,7 +51,8 @@ module.exports = React.createClass({
       if(this.state.items._links.next != undefined){
         var url = this.state.items._links.next
         var page = url.substring(url.lastIndexOf('/'),url.length);
-        API_lista.obtenerItems(page)
+        var limit = "&&limit="+this.props.tamPagina
+        API_lista.obtenerItems(page,limit)
             .then(datos => {
                 this.setState({items: datos})
             })
@@ -59,7 +62,8 @@ module.exports = React.createClass({
       if(this.state.items._links.prev != undefined){
         var url = this.state.items._links.prev
         var page = url.substring(url.lastIndexOf('/'),url.length);
-        API_lista.obtenerItems(page)
+        var limit = "&&limit="+this.props.tamPagina
+        API_lista.obtenerItems(page,limit)
             .then(datos => {
                 this.setState({items: datos})
             })
@@ -68,7 +72,8 @@ module.exports = React.createClass({
     paginateUltima: function(){
       var url = this.state.items._links.last
       var page = url.substring(url.lastIndexOf('/'),url.length);
-      API_lista.obtenerItems(page)
+      var limit = "&&limit="+this.props.tamPagina
+      API_lista.obtenerItems(page,limit)
           .then(datos => {
               this.setState({items: datos})
           })
@@ -120,10 +125,10 @@ module.exports = React.createClass({
                     <h1>Ingredientes</h1>
                     {prods}
 
-                    <a href="#" onClick={this.paginatePrimera}>Primera</a>&nbsp;&nbsp;
-                    <a href="#" onClick={this.paginateSiguiente}>Siguiente</a>&nbsp;&nbsp;
-                    <a href="#" onClick={this.paginateAnterior}>Anterior</a>&nbsp;&nbsp;
-                    <a href="#" onClick={this.paginateUltima}>Ultima</a>
+                    <a href="#" onClick={this.paginatePrimera}><span className="glyphicon glyphicon-fast-backward" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                    <a href="#" onClick={this.paginateAnterior}><span className="glyphicon glyphicon-backward" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                    <a href="#" onClick={this.paginateSiguiente}><span className="glyphicon glyphicon-forward" aria-hidden="true"></span></a>&nbsp;&nbsp;
+                    <a href="#" onClick={this.paginateUltima}><span className="glyphicon glyphicon-fast-forward" aria-hidden="true"></span></a>
                  </div>
         }
         else{

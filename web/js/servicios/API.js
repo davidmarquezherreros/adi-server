@@ -1,8 +1,11 @@
 
 module.exports  = {
     API_URL : 'http://localhost:3000/ingredientes',
-    obtenerItems: function (url) {
-        return fetch(this.API_URL+url)
+    obtenerItems: function (url, tamPagina) {
+        var peticion = ""
+        if(tamPagina == undefined){ peticion = this.API_URL+url}
+        else {peticion = this.API_URL+url+tamPagina}
+        return fetch(peticion)
             .then(function(response) {
                 if (response.ok)
                     return response.json()

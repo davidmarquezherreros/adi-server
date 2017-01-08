@@ -8,7 +8,7 @@ var Sesion = require('./Sesion')
 
 ReactDOM.render(<Sesion/>,
     document.getElementById('componenteSesion'))
-ReactDOM.render(<Lista tamPagina="5"/>,
+ReactDOM.render(<Lista tamPagina="10"/>,
     document.getElementById('componenteLista'))
 ReactDOM.render(<NuevoItem/>,
     document.getElementById('componenteNuevoItem'))
