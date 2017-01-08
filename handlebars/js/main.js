@@ -11,8 +11,8 @@ var templateItem = `
          <strong>{{nombre}}</strong></em>
       </span>
       <a id="enlace_{{id}}" href="javascript:verDetalles({{id}})">Detalles</a>
-      <a id="enlace_{{id}}" href="javascript:modificarIngrediente({{id}})">Modificar</a>
-      <a id="enlace_{{id}}" href="javascript:eliminarIngrediente({{id}})">Eliminar</a>
+      <a id="enlace_modificar{{id}}" href="javascript:modificarIngrediente({{id}})">Modificar</a>
+      <a id="enlace_eliminar{{id}}" href="javascript:eliminarIngrediente({{id}})">Eliminar</a>
    </div>
 `
 var templateError = `
@@ -47,8 +47,8 @@ var templateDetalles = `
 `
 
 var templateItemModificar = `
-   <div>
-    <strong>Id: {{id}}</strong>
+   <div id="div_modificar">
+    <strong>Id: {{id}}</strong><br />
     <label for="modificado_nombre">Nombre:</label> <input type="text" id="modificado_nombre" value="{{nombre}}"> <br>
     <label for="modificadoo_precio">Precio:</label> <input type="number" id="modificado_precio" value="{{precio}}"> <br>
     <a id="enlace_{{id}}" href="javascript:handleModificar({{id}})"><span class="glyphicon glyphicon-pencil" aria-hidden="true">Guardar</a>
@@ -157,6 +157,11 @@ function modificarIngrediente(id) {
 	    //esté en el HTML en un div con el mismo id
 		var divItem = document.getElementById(id)
 		divItem.insertAdjacentHTML('beforeend', datosHTML)
+    var enlaceDetalles = document.getElementById('enlace_modificar'+id)
+    //Cambiamos a dónde apunta el enlace
+    enlaceDetalles.href = 'javascript:ocultarModificacion('+ id +')'
+    //cambiamos el texto del enlace
+    enlaceDetalles.innerHTML = 'Ocultar modificacion'
 	})
 }
 function handleModificar(id){
@@ -192,6 +197,14 @@ function handleModificar(id){
     }
   });
 
+}
+function ocultarModificacion(id){
+  var ocultar = document.getElementById('enlace_modificar'+id)
+  //Cambiamos a dónde apunta el enlace
+  ocultar.href = 'javascript:modificarIngrediente('+ id +')'
+  //cambiamos el texto del enlace
+  ocultar.innerHTML = 'Modificar'
+  document.getElementById('div_modificar').outerHTML=""
 }
 //llamada cuando pulsamos en un enlace "Eliminar"
 function eliminarIngrediente(id) {
@@ -311,3 +324,4 @@ window.paginate= paginate
 window.modificarIngrediente = modificarIngrediente
 window.eliminarIngrediente = eliminarIngrediente
 window.handleModificar = handleModificar
+window.ocultarModificacion = ocultarModificacion
