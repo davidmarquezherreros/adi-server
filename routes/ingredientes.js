@@ -7,7 +7,6 @@ var Paginate = require('../paginate');
 // Listar todos los ingredientes
 router.get('/',function(pet, resp, next){
   models.Ingrediente.findAll().then(function(ingredientes) {
-
 		var opts = {
 			limit: parseInt(pet.query.limit) || 5,
 			page: parseInt(pet.query.page) || 1
@@ -16,6 +15,8 @@ router.get('/',function(pet, resp, next){
 		var pager = new Paginate(ingredientes, opts.limit);
 
 		var result = {};
+    console.log(pet.query)
+    console.log(opts.page)
 		result.ingredientes = pager.page(opts.page);
 		result._links = pager.getLinks(pet);
 

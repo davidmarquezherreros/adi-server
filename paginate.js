@@ -23,7 +23,6 @@ Paginate.prototype.page = function (pageNum) {
 
 	var start = this.offset()
 	  , end = start + this.cuantosPorPagina
-
 	return this.datos.slice(start, end);
 }
 
